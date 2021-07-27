@@ -40,8 +40,8 @@ function Directory() {
 
   return (
     <div className="directory-menu">
-      {section.map(({ title, id, imageUrl, size }) => (
-        <Menuitem key={id} title={title} imageUrl={imageUrl} size={size} />
+      {section.map(({ id, ...add }) => (
+        <Menuitem key={id} {...add} />
       ))}
     </div>
   );
