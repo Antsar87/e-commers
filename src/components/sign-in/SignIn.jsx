@@ -49,11 +49,13 @@ function SignIn() {
           required
         />
 
-        <Custombutton type="submit"> Sign in </Custombutton>
-        <Custombutton onClick={signInWithGoogle}>
-          {' '}
-          Sign in with Google
-        </Custombutton>
+        <div className="buttons">
+          <Custombutton type="submit"> Sign in </Custombutton>
+          <Custombutton signInWithGoogle onClick={signInWithGoogle}>
+            {' '}
+            Sign in with Google
+          </Custombutton>{' '}
+        </div>
       </form>
     </div>
   );

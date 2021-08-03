@@ -1,26 +1,23 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Homepage from './pages/homepage/Homepage';
 import Shop from './pages/shop/Shop';
 import SignInAndSignOut from './pages/sign-in-and-sign-out/Sign-in-and-sign-out';
 import Header from './components/header/Header';
 import { Switch, Route } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase/Firebase';
 
 function App() {
-  const [check, setcheck] = useState({ currentUser: null });
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setcheck({
-        currentUser: user,
-      });
-      console.log(user);
-    });
-  }, []);
+    console.log(user);
+  }, [user]);
+
   return (
     <div>
-      <Header />
+      <Header currentUser={user} />
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route exact path="/shop" component={Shop} />
