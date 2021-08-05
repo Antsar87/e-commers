@@ -13,7 +13,10 @@ const confing = {
 };
 
 export const createUserProfileDocument = async (userAuth, otherthings) => {
+
   if (!userAuth) return;
+
+  
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
