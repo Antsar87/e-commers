@@ -6,14 +6,16 @@ import SignInAndSignOut from './pages/sign-in-and-sign-out/Sign-in-and-sign-out'
 import Header from './components/header/Header';
 import { Switch, Route } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from './firebase/Firebase';
+import { auth, createUserProfileDocument } from './firebase/Firebase';
 
 function App() {
   const [user] = useAuthState(auth);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  useEffect(() => {Data()}, [user]);
+
+  const Data = async () => {
+    await createUserProfileDocument(user);
+  };
 
   return (
     <div>

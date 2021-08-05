@@ -12,6 +12,35 @@ const confing = {
   measurementId: 'G-FBBRJZ6C8P',
 };
 
+export const createUserProfileDocument = async (userAuth, otherthings) => {
+  if (!userAuth) return;
+
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+  const snapShot = userRef.get();
+
+  console.log(snapShot);
+
+  if (!(await snapShot).exists) {
+    const { displayName, email } = userAuth;
+
+    const createdAt = new Date();
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...otherthings,
+      });
+    } catch (error) {
+      console.log('(yare yare');
+    }
+  }
+
+  return userRef
+};
+
 firebase.initializeApp(confing);
 
 export const auth = firebase.auth();
