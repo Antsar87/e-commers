@@ -13,19 +13,16 @@ const confing = {
 };
 
 export const createUserProfileDocument = async (userAuth, otherthings) => {
-
   if (!userAuth) return;
-
-  
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
-  const snapShot = userRef.get();
+  const snapShot = await userRef.get();
 
-  console.log(snapShot);
 
-  if (!(await snapShot).exists) {
+  if (!snapShot.exists) {
     const { displayName, email } = userAuth;
+    
 
     const createdAt = new Date();
 
@@ -37,11 +34,11 @@ export const createUserProfileDocument = async (userAuth, otherthings) => {
         ...otherthings,
       });
     } catch (error) {
-      console.log('(yare yare');
+      console.log('malo', error.message);
     }
   }
 
-  return userRef
+  return userRef;
 };
 
 firebase.initializeApp(confing);

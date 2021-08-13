@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Homepage from './pages/homepage/Homepage';
 import Shop from './pages/shop/Shop';
 import SignInAndSignOut from './pages/sign-in-and-sign-out/Sign-in-and-sign-out';
@@ -10,12 +10,25 @@ import { auth, createUserProfileDocument } from './firebase/Firebase';
 
 function App() {
   const [user] = useAuthState(auth);
+  const [space, setspace] = useState([]);
 
-  useEffect(() => {Data()}, [user]);
+  useEffect(() => {
+    const datos = async () => {
+      if (user) {
+        let userRef = await createUserProfileDocument(user);
 
-  const Data = async () => {
-    await createUserProfileDocument(user);
-  };
+        let store = [];
+
+        userRef.onSnapshot((snap) => {
+          store.push({ currentUser: snap.id, ...snap.data() });
+        });
+
+        setspace(() => store);
+      }
+    };
+
+    datos();
+  }, [user]);
 
   return (
     <div>
