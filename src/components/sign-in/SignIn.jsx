@@ -58,7 +58,7 @@ function SignIn() {
         />
 
         <div className="buttons">
-          <Custombutton type="submit"> Sign in </Custombutton>
+          <Custombutton type="button"> Sign in </Custombutton>
           <Custombutton signInWithGoogle onClick={signInWithGoogle}>
             {' '}
             Sign in with Google
