@@ -10,7 +10,7 @@ import { auth, createUserProfileDocument } from './firebase/Firebase';
 
 function App() {
   const [user] = useAuthState(auth);
-  const [space, setspace] = useState([]);
+  const [space, setspace] = useState({ currentUser: null });
 
   useEffect(() => {
     const datos = async () => {
@@ -27,13 +27,14 @@ function App() {
       }
     };
 
-    console.log(user);
     datos();
   }, [user]);
 
+  console.log(space);
+
   return (
     <div>
-      <Header currentUser={user} />
+      <Header />
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route exact path="/shop" component={Shop} />
