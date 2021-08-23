@@ -7,13 +7,15 @@ import Header from './components/header/Header';
 import { Switch, Route } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, createUserProfileDocument } from './firebase/Firebase';
+import { setCurrentUser } from './redux/user/user.action';
+import { useDispatch } from 'react-redux';
 
 function App() {
   const [user] = useAuthState(auth);
-  const [space, setspace] = useState({ currentUser: null });
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const datos = async () => {
+    const Datos = async () => {
       if (user) {
         let userRef = await createUserProfileDocument(user);
 
@@ -23,14 +25,12 @@ function App() {
           store.push({ currentUser: snap.id, ...snap.data() });
         });
 
-        setspace(() => store);
+        dispatch(setCurrentUser(store));
       }
     };
 
-    datos();
+    Datos();
   }, [user]);
-
-  console.log(space);
 
   return (
     <div>

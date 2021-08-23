@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../../firebase/Firebase';
 import { ReactComponent as Logo } from '../assets/crown.svg';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { auth } from '../../firebase/Firebase';
+import { setSignOut } from '../../redux/user/user.action';
+
 import './header.scss';
 
-function Header({ currentUser }) {
+function Header() {
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -31,9 +36,4 @@ function Header({ currentUser }) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;
