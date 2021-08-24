@@ -13,6 +13,8 @@ function SignIn() {
 
     const { email, password } = state;
 
+    console.log(email);
+
     try {
       await auth.signInWithEmailAndPassword(email, password);
       setstate({
@@ -58,7 +60,7 @@ function SignIn() {
         />
 
         <div className="buttons">
-          <Custombutton type="button"> Sign in </Custombutton>
+          <Custombutton type="submit"> Sign in </Custombutton>
           <Custombutton signInWithGoogle onClick={signInWithGoogle}>
             {' '}
             Sign in with Google

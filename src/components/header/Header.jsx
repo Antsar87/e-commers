@@ -11,6 +11,11 @@ function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const adios = () => {
+    auth.signOut()
+    dispatch(setSignOut())
+  }
+
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -24,7 +29,10 @@ function Header() {
           CONTACT
         </Link>
         {currentUser ? (
-          <div className="option" onClick={() => auth.signOut()}>
+          <div
+            className="option"
+            onClick={(() => adios())}
+          >
             Sign Out
           </div>
         ) : (
