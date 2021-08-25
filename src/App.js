@@ -1,14 +1,22 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import { setCurrentUser } from './redux/user/user.action';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Header from './components/header/Header';
 import Homepage from './pages/homepage/Homepage';
 import Shop from './pages/shop/Shop';
 import SignInAndSignOut from './pages/sign-in-and-sign-out/Sign-in-and-sign-out';
-import Header from './components/header/Header';
+
+import { GetIp } from './redux/user/user.action';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, createUserProfileDocument } from './firebase/Firebase';
-import { setCurrentUser } from './redux/user/user.action';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  auth,
+  createUserProfileDocument,
+  firestore,
+} from './firebase/Firebase';
+
 import { css } from '@emotion/react';
 import CircleLoader from 'react-spinners/CircleLoader';
 
@@ -40,7 +48,32 @@ function App() {
     };
 
     Datos();
+    let ipv4 = [];
 
+    const gettingIp = async () => {
+      await fetch('https://api.ipify.org?format=jsonp?callback=?', {
+        method: 'GET',
+        headers: {},
+      })
+        .then((res) => {
+          return res.text();
+        })
+        .then((ip) => {
+          ipv4.push(ip);
+        });
+
+      let fetching = await fetch(`http://ip-api.com/json/${ipv4}`);
+      let json = await fetching.json();
+
+      // firestore.collection('users').add({
+      //   ...json,
+      // });
+
+      ipv4.push(json);
+    };
+
+    dispatch(GetIp(ipv4));
+    gettingIp();
     setTimeout(() => setloading(false), 4000);
   }, [user]);
 

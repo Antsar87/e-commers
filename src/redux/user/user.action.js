@@ -8,3 +8,8 @@ export const setCurrentUser = (user) => ({
 export const setSignOut = () => ({
   type: UserActionTypes.SIGN_OUT,
 });
+
+export const GetIp = (ip) => ({
+  type: UserActionTypes.GET_IP,
+  payload: ip,
+});

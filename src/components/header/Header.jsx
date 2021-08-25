@@ -1,9 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ReactComponent as Logo } from '../assets/crown.svg';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { Link } from 'react-router-dom';
+
 import { auth } from '../../firebase/Firebase';
 import { setSignOut } from '../../redux/user/user.action';
+
+import { ReactComponent as Logo } from '../assets/crown.svg';
+import CartIcon from '../cart-icon/Cart-icon';
+import CartDropdown from '../cart-dropdown/Cart-Dropdown';
 
 import './header.scss';
 
@@ -12,9 +17,9 @@ function Header() {
   const dispatch = useDispatch();
 
   const adios = () => {
-    auth.signOut()
-    dispatch(setSignOut())
-  }
+    auth.signOut();
+    dispatch(setSignOut());
+  };
 
   return (
     <div className="header">
@@ -29,10 +34,7 @@ function Header() {
           CONTACT
         </Link>
         {currentUser ? (
-          <div
-            className="option"
-            onClick={(() => adios())}
-          >
+          <div className="option" onClick={() => adios()}>
             Sign Out
           </div>
         ) : (
@@ -40,7 +42,9 @@ function Header() {
             Sign In
           </Link>
         )}
+        <CartIcon />
       </div>
+      <CartDropdown />
     </div>
   );
 }

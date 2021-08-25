@@ -18,6 +18,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         currentUser: null,
       };
 
+    case UserActionTypes.GET_IP:
+      return {
+        api: action.payload,
+      };
+
     default:
       return state;
   }
