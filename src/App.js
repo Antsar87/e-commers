@@ -32,49 +32,50 @@ function App() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    const Datos = async () => {
-      if (user) {
-        let userRef = await createUserProfileDocument(user);
+  let ipv4 = [];
 
-        let store = [];
-
-        userRef.onSnapshot((snap) => {
-          store.push({ currentUser: snap.id, ...snap.data() });
-        });
-
-        dispatch(setCurrentUser(store));
-      }
-    };
-
-    Datos();
-    let ipv4 = [];
-
-    const gettingIp = async () => {
-      await fetch('https://api.ipify.org?format=jsonp?callback=?', {
-        method: 'GET',
-        headers: {},
+  const gettingIp = async () => {
+    await fetch('https://api.ipify.org?format=jsonp?callback=?', {
+      method: 'GET',
+      headers: {},
+    })
+      .then((res) => {
+        return res.text();
       })
-        .then((res) => {
-          return res.text();
-        })
-        .then((ip) => {
-          ipv4.push(ip);
-        });
+      .then((ip) => {
+        ipv4.push(ip);
+      });
 
-      let fetching = await fetch(`http://ip-api.com/json/${ipv4}`);
-      let json = await fetching.json();
+    let fetching = await fetch(`http://ip-api.com/json/${ipv4}`);
+    let json = await fetching.json();
 
-      // firestore.collection('users').add({
-      //   ...json,
-      // });
+    // firestore.collection('users').add({
+    //   ...json,
+    // });
 
-      ipv4.push(json);
-    };
+    ipv4.push(json);
+  };
 
+  const Datos = async () => {
+    if (user) {
+      let userRef = await createUserProfileDocument(user);
+
+      let store = [];
+
+      userRef.onSnapshot((snap) => {
+        store.push({ currentUser: snap.id, ...snap.data() });
+      });
+
+      dispatch(setCurrentUser(store));
+    }
+  };
+
+  useEffect(() => {
     dispatch(GetIp(ipv4));
+    Datos();
     gettingIp();
-    setTimeout(() => setloading(false), 4000);
+    setTimeout(() => setloading(false), 3000)
+    
   }, [user]);
 
   return (

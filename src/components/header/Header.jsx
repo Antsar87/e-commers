@@ -14,6 +14,7 @@ import './header.scss';
 
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
+  const { hidden } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const adios = () => {
@@ -44,7 +45,8 @@ function Header() {
         )}
         <CartIcon />
       </div>
-      <CartDropdown />
+      {hidden ? null : (<CartDropdown />)}
+      
     </div>
   );
 }
