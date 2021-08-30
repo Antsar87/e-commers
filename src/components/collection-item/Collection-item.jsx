@@ -8,6 +8,7 @@ import { addItem } from '../../redux/cart/cart.action';
 
 function Collectionitem({ item, addItemv2 }) {
   const dispatch = useDispatch();
+  console.log();
 
   // dispatch((item) => addItem(item));
 

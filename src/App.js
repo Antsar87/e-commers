@@ -14,7 +14,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import {
   auth,
   createUserProfileDocument,
-  firestore,
+  // firestore,
 } from './firebase/Firebase';
 
 import { css } from '@emotion/react';
